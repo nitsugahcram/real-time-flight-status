@@ -1,7 +1,7 @@
 
 # Mini Take-Home Project
 
-## Objective: 
+## Objective
 
 * Build a docker with the services you think are necessary. The database and the table have to be created when running docker.
 * Create a process in Nifi that allows obtaining the information from the API.
@@ -20,6 +20,32 @@ The [AviationStack] API was built to provide a simple way of accessing global av
 
 An easy to use, powerful, and reliable system to process and distribute data. Apache [NiFi] supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic.
 
+## Requirements
+
+* Docker: [how to install](https://docs.docker.com/get-docker/)
+  * Docker-Compose: [how to install](https://docs.docker.com/compose/install/)
+* Python 3.*
+* Docker Images:
+  * [apache/nifi](https://hub.docker.com/r/apache/nifi/)
+  * [postgres](https://hub.docker.com/_/postgres)
+  * [fastApi](https://hub.docker.com/r/tiangolo/uvicorn-gunicorn-fastapi)
+
+## Start Env
+
+* It is based on docker images orchestrated by docker-compose
+
+```
+docker-compose -f docker-aviationstak/docker-composer.ym build
+docker-compose -f docker-aviationstak/docker-composer.ym up
+```
+
+## Links
+
+* NIFI UI:
+  * http://127.0.0.1:8080/nifi
+
+* Notebook:
+  * http://127.0.0.1:8001
 
 [AviationStack]: https://aviationstack.com/
 [Nifi]: https://nifi.apache.org/
