@@ -37,7 +37,7 @@ services:
     ports:
       - "8888:80"
     volumes:
-      - ../api/:/app
+      - ../avstackhelper/api/:/app
 
   book:
     image: notebook:local
