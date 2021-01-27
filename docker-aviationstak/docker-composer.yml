@@ -1,0 +1,59 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:9.6.2
+    hostname: aviationdb_postgres
+    container_name: aviationdb_postgres
+    environment:
+      - POSTGRES_USER=testfligoo
+      - POSTGRES_PASSWORD=testdata
+      - POSTGRES_DB=aviationstack
+    volumes:
+      - "aviationstack_dbdata:/var/lib/postgresql/data"
+      - ../db/aviationstack_schema_init.sql:/docker-entrypoint-initdb.d/aviationstack_schema_init.sql
+    ports:
+      - "5432:5432"
+
+  nifi:
+    image: apache/nifi
+    restart: on-failure
+    container_name: aviationstack_nifi
+    hostname: nifi
+    ports:
+      - "8080:8080"
+    environment:
+      - NIFI_WEB_HTTP_PORT=8080
+    volumes:
+      - ../nifi/drivers:/opt/nifi/nifi-current/drivers
+      - ../nifi/conf:/opt/nifi/nifi-current/conf
+    depends_on:
+      - postgres
+      - api
+  api:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
+    restart: always
+    container_name: aviationstack_api
+    hostname: aviationstack_api
+    ports:
+      - "8888:80"
+    volumes:
+      - ../api/:/app
+
+  book:
+    image: notebook:local
+    container_name: aviationstack_notebook
+    build:
+      context: ./notebooks
+      dockerfile: Dockerfile
+    volumes:
+      - ../notebooks/:/home/analytics/notebooks/
+    ports:
+      - "8001:8001"
+    depends_on:
+      - postgres
+    environment:
+      - NOJUPYTER_ENABLE_LAB=0
+    command: start-notebook.sh --ip=* --port 8001 --NotebookApp.notebook_dir=notebooks/ --ResourceUseDisplay.track_cpu_percent=True --NotebookApp.token='' --NotebookApp.password=''
+
+volumes:
+  aviationstack_dbdata:

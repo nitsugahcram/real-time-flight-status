@@ -3,12 +3,34 @@
 
 ## Objective
 
+Create a datapipe using NIFI, which allows the ingestion of data from aviationstack api, instantiate a master data set (following the fact model), and perform a simple transformation, creating a view of data. The services will be instantiated with docker-compose.
+
 * Build a docker with the services you think are necessary. The database and the table have to be created when running docker.
-* Create a process in Nifi that allows obtaining the information from the API.
-* Replace the "/" of the arrivalTerminal and departureTimezone fields for " - ". E.g: "Asia/Shanghai" to "Asia - Shanghai"
-* Insert the information in the database.
+  * Services:
+    * postgress
+    * nifi
+    * api (mock data)
+    * notebook
+
+* Create a process in [Nifi] that allows obtaining the information from the API.
+  - Aviation Data Flows
+    - Ingestion Phase
+      * Get Data from [AviationStack] API
+    - Master Set
+      -  Insert the information in the database (Postgres).
+    - ETL on Batch Processing
+      * Replace the "/" of the arrivalTerminal and departureTimezone fields for " - ". E.g: "Asia/Shanghai" to "Asia - Shanghai"
+      * Insert the information in the database (Postgres).
 * Create a Jupyter notebook to consume the information stored in the database.
 * Show the information in a Pandas dataframe
+
+## What I Learn?
+
+- [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production, since the lack of programatic support, like airflow etc.
+- Connect Nifi process to 
+  - Postgres DB
+  - Create a ETL Batch
+- Note: The maste repository is not appropiate to be mysql for bigdata.
 
 ## Background
 
@@ -29,8 +51,12 @@ An easy to use, powerful, and reliable system to process and distribute data. Ap
   * [apache/nifi](https://hub.docker.com/r/apache/nifi/)
   * [postgres](https://hub.docker.com/_/postgres)
   * [fastApi](https://hub.docker.com/r/tiangolo/uvicorn-gunicorn-fastapi)
+* JDBC PostgresSQL Driver:
+  * Driver required to be provisioned to NIFI instanciances, allowing to connect to progres database
+  * [postgresql-42.2.18.jar](https://jdbc.postgresql.org/download.html)
+## Environment
 
-## Start Env
+*Folder: docker-aviationstak*
 
 * It is based on docker images orchestrated by docker-compose
 
@@ -39,6 +65,7 @@ docker-compose -f docker-aviationstak/docker-composer.ym build
 docker-compose -f docker-aviationstak/docker-composer.ym up
 ```
 
+
 ## Links
 
 * NIFI UI:
@@ -46,6 +73,12 @@ docker-compose -f docker-aviationstak/docker-composer.ym up
 
 * Notebook:
   * http://127.0.0.1:8001
+
+# TODO
+
+* add make as build tool
+
+
 
 [AviationStack]: https://aviationstack.com/
 [Nifi]: https://nifi.apache.org/
