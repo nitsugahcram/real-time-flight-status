@@ -3,6 +3,7 @@ import os
 from setuptools import setup, find_packages, Command
 from avstackhelper import __version__
 
+
 class CleanCommand(Command):
     """Custom clean command to tidy up the project root."""
 
@@ -23,18 +24,16 @@ setup(
     zip_safe=True,
     name="avstackhelper",
     version=__version__,
-    description=("Traces by Analytics desctiption."),
+    description=("Aviation Stack Help Libs."),
     keywords='',
     license="MIT License",
     packages=find_packages(exclude=['contrib', 'docs', 'tests*', 'examples*']),
-    url='',
+    url='git@github.com:nitsugahcram/real-time-flight-status.git',
     author='Agustin March',
     author_email='agustin.march@gmail.com',
     long_description='Python application to process aviationstack data',
     python_requires='>=3.6, !=3.0.*, !=3.1.*, !=3.2.*, <4',
-    install_requires=[
-        "psycopg2-binary==2.8.6"
-    ],
+    install_requires=["psycopg2-binary==2.8.6"],
     # package_data={"precogs": ["sink/conf/default.yaml"]},
     classifiers=[
         "Topic :: Software Development :: Libraries :: Python Modules",
