@@ -39,21 +39,21 @@ services:
     volumes:
       - ../avstackhelper/api/:/app
 
-  book:
+  notebook:
     image: notebook:local
     container_name: aviationstack_notebook
     build:
       context: ./notebooks
       dockerfile: Dockerfile
     volumes:
-      - ../notebooks/:/home/analytics/notebooks/
+      - ../:/home/analytics/workspace
     ports:
       - "8001:8001"
     depends_on:
       - postgres
     environment:
       - NOJUPYTER_ENABLE_LAB=0
-    command: start-notebook.sh --ip=* --port 8001 --NotebookApp.notebook_dir=notebooks/ --ResourceUseDisplay.track_cpu_percent=True --NotebookApp.token='' --NotebookApp.password=''
+    command: start-notebook.sh --ip=* --port 8001 --NotebookApp.notebook_dir=workspace/ --ResourceUseDisplay.track_cpu_percent=True --NotebookApp.token='' --NotebookApp.password=''
 
 volumes:
   aviationstack_dbdata:

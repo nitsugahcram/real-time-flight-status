@@ -3,22 +3,31 @@
 
 ## Objective
 
-Create a datapipe using NIFI, which allows the ingestion of data from aviationstack api, instantiate a master data set (following the fact model), and perform a simple transformation, creating a view of data. The services will be instantiated with docker-compose.
+Create a datapipe using NIFI, which allows the ingestion of data from aviationstack api, instantiate a master data set (fact model), and creating a view of data of simple transformation,. The services will be instantiated with docker-compose.
 
-* Build a docker with the services you think are necessary. The database and the table have to be created when running docker.
-  * Services:
+## Conceptual View
+
+![Optional Text](./doc/aviationstack_overview.png)
+
+## Service Instaciated
+
     * postgress
+      * Master Data Set
+      * Batch Views
     * nifi
+      * Ingestion Processor
+      * ETL Batch Process
     * api (mock data)
+      * Emulated AviatioStack API
     * notebook
+      * Jupyter Notebook
 
 * Create a process in [Nifi] that allows obtaining the information from the API.
-  - Aviation Data Flows
-    - Ingestion Phase
+  * Aviation Data Flows
+    * Ingestion Phase
       * Get Data from [AviationStack] API
-    - Master Set
-      -  Insert the information in the database (Postgres).
-    - ETL on Batch Processing
+      * Insert the information in the database (Postgres) Master Set
+    * ETL on Batch Processing
       * Replace the "/" of the arrivalTerminal and departureTimezone fields for " - ". E.g: "Asia/Shanghai" to "Asia - Shanghai"
       * Insert the information in the database (Postgres).
 * Create a Jupyter notebook to consume the information stored in the database.
@@ -27,10 +36,11 @@ Create a datapipe using NIFI, which allows the ingestion of data from aviationst
 ## What I Learn?
 
 - [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production, since the lack of programatic support, like airflow etc.
-- Connect Nifi process to 
+- Connect Nifi process to
   - Postgres DB
   - Create a ETL Batch
 - Note: The maste repository is not appropiate to be mysql for bigdata.
+- Interface SQL - Pandas
 
 ## Background
 
@@ -42,15 +52,23 @@ The [AviationStack] API was built to provide a simple way of accessing global av
 
 An easy to use, powerful, and reliable system to process and distribute data. Apache [NiFi] supports powerful and scalable directed graphs of data routing, transformation, and system mediation logic.
 
+### FastAPI
+
+[FastAPI](https://fastapi.tiangolo.com/) is a modern, fast (high-performance), web framework for building APIs with Python 3.6+.
+
+
+### Jupyter Notebooks
+
+The [notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) extends the console-based approach to interactive computing in a qualitatively new direction, providing a web-based application suitable for capturing the whole computation process: developing, documenting, and executing code, as well as communicating the results
 ## Requirements
 
 * Docker: [how to install](https://docs.docker.com/get-docker/)
   * Docker-Compose: [how to install](https://docs.docker.com/compose/install/)
-* Python 3.*
-* Docker Images:
+* Docker Hub Images:
   * [apache/nifi](https://hub.docker.com/r/apache/nifi/)
   * [postgres](https://hub.docker.com/_/postgres)
   * [fastApi](https://hub.docker.com/r/tiangolo/uvicorn-gunicorn-fastapi)
+* Python 3.*
 * JDBC PostgresSQL Driver:
   * Driver required to be provisioned to NIFI instanciances, allowing to connect to progres database
   * [postgresql-42.2.18.jar](https://jdbc.postgresql.org/download.html)
@@ -59,12 +77,13 @@ An easy to use, powerful, and reliable system to process and distribute data. Ap
 *Folder: docker-aviationstak*
 
 * It is based on docker images orchestrated by docker-compose
-
+## Build the Notebook image
 ```
 docker-compose -f docker-aviationstak/docker-composer.ym build
-docker-compose -f docker-aviationstak/docker-composer.ym up
 ```
-
+## Start 
+```docker-compose -f docker-aviationstak/docker-composer.ym -d up
+```
 
 ## Links
 
@@ -74,11 +93,17 @@ docker-compose -f docker-aviationstak/docker-composer.ym up
 * Notebook:
   * http://127.0.0.1:8001
 
-# TODO
+NOTE: **Not passwork or token** is require to access to eigther [NIFI UI] or [Notebook]
+### Configuration
 
-* add make as build tool
+Since this is conceptual approach, it will be require to enter to NIFI [UI] and configure the [AviationStack] Api Key
+
+
+
 
 
 
 [AviationStack]: https://aviationstack.com/
 [Nifi]: https://nifi.apache.org/
+[NIFI UI]:http://127.0.0.1:8080/nifi
+[Notebook]: http://127.0.0.1:8001

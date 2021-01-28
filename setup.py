@@ -1,7 +1,7 @@
 """Setup the package creation and installation."""
 import os
 from setuptools import setup, find_packages, Command
-
+from avstackhelper import __version__
 
 class CleanCommand(Command):
     """Custom clean command to tidy up the project root."""
@@ -21,8 +21,8 @@ class CleanCommand(Command):
 
 setup(
     zip_safe=True,
-    name="precogs",
-    version="1.1.7",
+    name="avstackhelper",
+    version=__version__,
     description=("Traces by Analytics desctiption."),
     keywords='',
     license="MIT License",
