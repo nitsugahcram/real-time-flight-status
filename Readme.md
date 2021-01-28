@@ -35,12 +35,14 @@ Create a datapipe using NIFI, which allows the ingestion of data from aviationst
 
 ## What I Learn?
 
-- [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production, since the lack of programatic support, like airflow etc.
+- [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production. 
 - Connect Nifi process to
   - Postgres DB
   - Create a ETL Batch
+  **NOTE** Beside the power of the tool, I prefer other tools like airflow, that allow to create DAGs using code rather the UI.
 - Note: The maste repository is not appropiate to be mysql for bigdata.
 - Interface SQL - Pandas
+
 
 ## Background
 
