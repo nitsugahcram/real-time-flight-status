@@ -38,12 +38,14 @@ Create a datapipe using NIFI, which allows the ingestion of data from aviationst
 
 ## What I Learn?
 
-- [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production.
+- [Nifi] is a powerfull tool for distribute and processing data. However, I am not feel confortable with UI and how to manage DAGs, in term of CI pipelines.
 - Connect Nifi process to
   - Postgres DB
   - Create a ETL Batch
-  **NOTE** Beside the power of the tool, I prefer other tools like airflow, that allow to create DAGs using code rather the UI.
-- Note: The maste repository is not appropiate to be mysql for bigdata.
+
+**NOTE** Beside the power of the tool, I prefer other tools like airflow, that allow to create DAGs using code rather the UI.
+
+- Note: The master repository should be place over HDFS and user columnar and compress format such as [Apache Parquet](https://parquet.apache.org/)
 - Interface SQL - Pandas
 
 
@@ -83,17 +85,21 @@ The [notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) 
 
 * It is based on docker images orchestrated by docker-compose
 
+# How to Use?
+
 ## Build the Notebook image
 
 ```bash
-docker-compose -f docker-aviationstak/docker-composer.ym build
+docker-compose -f docker-aviationstak/docker-composer.yml build
 ```
 
 ## Start Services
 
 ```bash
-docker-compose -f docker-aviationstak/docker-composer.ym -d up
+docker-compose -f docker-aviationstak/docker-composer.yml up
 ```
+
+Now you could go the following pages. Remember to update the configuration for api_key and endpoint to fetch data from [AviationStack] API
 
 ## Links
 
@@ -112,14 +118,30 @@ Since this is conceptual approach, it will be require to enter to NIFI [UI] and 
 * [AviationStack] Api Key
 * [AviationStack] EndPoint URL
   * According the type of account could be set https or http
-    * *http://api.aviationstack.com/v1/flight*
+    * *http://api.aviationstack.com/v1/flights*
   * For testing purpose, it is possible to configure with testing api
-    * *http://aviationstack_api/v1/flight*
+    * *http://aviationstack_api/v1/flights*
 
   1. Go to Menu -> Parameter Contexts
     . Edit ingestionDataCtx Parameter
       . Edit the aviationstack_access_key
       . Edit viationstack_access_key
+
+## AVStack Helper
+
+### Objective
+
+The library is intended to create functions that are reused in data processing, analysis, and visualization.
+
+### Set Enviroments
+
+* [Visual Studio Code](https://code.visualstudio.com)
+* [Python 3.X](https://www.python.org/downloads/) 
+  * pipenv
+  ```bash
+  pip3 install pipenv -U
+  pipenv install --dev
+  ```
 
 [AviationStack]: https://aviationstack.com/
 [Nifi]: https://nifi.apache.org/
