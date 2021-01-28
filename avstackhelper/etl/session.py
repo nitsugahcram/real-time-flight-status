@@ -1,7 +1,6 @@
 from psycopg2 import connect, DatabaseError
 
 
-
 def postgresql_connect(params_dic: dict):
     """ Connect to the PostgreSQL database server """
     conn = None
@@ -15,7 +14,8 @@ def postgresql_connect(params_dic: dict):
         print(error)
     return conn
 
-def postgresql_fetch_data(conn: connect, select_query:str):
+
+def postgresql_fetch_data(conn: connect, select_query: str):
     """Fetch Data from postgress"""
     tupples = []
     try:

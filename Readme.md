@@ -7,7 +7,7 @@ Create a datapipe using NIFI, which allows the ingestion of data from aviationst
 
 ## Conceptual View
 
-![Optional Text](./doc/aviationstack_overview.png)
+![Overall Arch](./doc/aviationstack_overview.png)
 
 ## Service Instaciated
 
@@ -31,11 +31,14 @@ Create a datapipe using NIFI, which allows the ingestion of data from aviationst
       * Replace the "/" of the arrivalTerminal and departureTimezone fields for " - ". E.g: "Asia/Shanghai" to "Asia - Shanghai"
       * Insert the information in the database (Postgres).
 * Create a Jupyter notebook to consume the information stored in the database.
-* Show the information in a Pandas dataframe
+  * Instantiated as service, with avstackhelper libs at python path.
+  * Showcase how use Pandas dataframe to retrieve data from pandas
+* Master Data Set:
+  * Dataset will ever-growing list, immutable, atomic facts
 
 ## What I Learn?
 
-- [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production. 
+- [Nifi] is a powerfull tool for distribute data, although I not sure if I will choose for production.
 - Connect Nifi process to
   - Postgres DB
   - Create a ETL Batch
@@ -79,12 +82,17 @@ The [notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) 
 *Folder: docker-aviationstak*
 
 * It is based on docker images orchestrated by docker-compose
+
 ## Build the Notebook image
-```
+
+```bash
 docker-compose -f docker-aviationstak/docker-composer.ym build
 ```
-## Start 
-```docker-compose -f docker-aviationstak/docker-composer.ym -d up
+
+## Start Services
+
+```bash
+docker-compose -f docker-aviationstak/docker-composer.ym -d up
 ```
 
 ## Links
@@ -92,20 +100,28 @@ docker-compose -f docker-aviationstak/docker-composer.ym build
 * NIFI UI:
   * http://127.0.0.1:8080/nifi
 
-* Notebook:
+* Aviation Notebook:
   * http://127.0.0.1:8001
 
-NOTE: **Not passwork or token** is require to access to eigther [NIFI UI] or [Notebook]
+NOTE: **Neigther password nor token** is require to access to eigther [NIFI UI] or [Aviation Notebook]
+
 ### Configuration
 
-Since this is conceptual approach, it will be require to enter to NIFI [UI] and configure the [AviationStack] Api Key
+Since this is conceptual approach, it will be require to enter to NIFI [UI] and configure the following *Parameter Contexts* of **Aviation Data Flow** Nifi Group Process
 
+* [AviationStack] Api Key
+* [AviationStack] EndPoint URL
+  * According the type of account could be set https or http
+    * *http://api.aviationstack.com/v1/flight*
+  * For testing purpose, it is possible to configure with testing api
+    * *http://aviationstack_api/v1/flight*
 
-
-
-
+  1. Go to Menu -> Parameter Contexts
+    . Edit ingestionDataCtx Parameter
+      . Edit the aviationstack_access_key
+      . Edit viationstack_access_key
 
 [AviationStack]: https://aviationstack.com/
 [Nifi]: https://nifi.apache.org/
 [NIFI UI]:http://127.0.0.1:8080/nifi
-[Notebook]: http://127.0.0.1:8001
+[Aviation Notebook]: http://127.0.0.1:8001

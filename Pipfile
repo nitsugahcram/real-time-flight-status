@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+isort = "==5.7.0"
+mock = "==4.0.2"
+pytest = "==6.2.2"
+pytest-cov = "==2.11.1"
+pytest-mock = "==3.5.1"
+pytest-profiling = "==1.7.0"
+pytest_postgresql = "==2.5.2"
+yapf = "==0.30.0"
+# pep8 = {version = "==1.7.1", index = "pypi"}
+# prospector = {extras = ["with-everything"], version = "==1.2.0", index = "pypi"}
+# pyflakes = {version = "==1.6.0", index = "pypi"}
+# pylint = {version = "==2.4.4", index = "pypi"}
+# pytest-profiling = {version = "==1.7.0", index = "pypi"}
+# rope = {version = "==0.16.0", index = "pypi"}
+
+[packages]
+fastapi = "==0.63.0"
+psycopg2-binary = "==2.8.6"
+
+[requires]
+python_version = "3.8"
